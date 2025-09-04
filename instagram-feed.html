@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>ALCLZ - Instagram feed</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0; display:flex; justify-content:center; align-items:center; height:100vh;">
+
+<div id="insta-container" style="max-width:400px; width:100%; text-align:center; font-family:sans-serif;">
+   Loading latest Instagram post...
+</div>
+
+<script>
+    const accessToken = "YOUR_ACCESS_TOKEN";
+    const endpoint = `https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink&access_token=${accessToken}`;
+
+    fetch(endpoint)
+        .then(res => res.json())
+        .then(data => {
+            if (data.data && data.data.length > 0) {
+                const post = data.data[0]; // Latest post
+                document.getElementById("insta-container").innerHTML = `
+            <a href="${post.permalink}" target="_blank" style="text-decoration:none; color:inherit;">
+              <img src="${post.media_url}" alt="Instagram Post" style="max-width:100%; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.2);"/>
+              <p style="margin-top:10px;">${post.caption || ""}</p>
+            </a>
+          `;
+            } else {
+                document.getElementById("insta-container").textContent = "No posts found.";
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById("insta-container").textContent = "Error loading post.";
+        });
+</script>
+
+</body>
+</html>
