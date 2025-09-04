@@ -1,1 +1,0 @@
-# Smartschool-tools-and-displays
