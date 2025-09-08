@@ -7,17 +7,29 @@ export default async (request, context) => {
     // Generate current date
     const currentDate = new Date();
     const options = { year: "numeric", month: "long", day: "numeric", weekday: "long" };
-    const formattedDate = currentDate.toLocaleDateString("nl-be", options);
+    const formattedDateParts = new Intl.DateTimeFormat("nl-NL", options).formatToParts(currentDate);
+
+    // Extract parts
+    const weekday = formattedDateParts.find(p => p.type === "weekday").value.toUpperCase();
+    const day = formattedDateParts.find(p => p.type === "day").value;
+    const month = formattedDateParts.find(p => p.type === "month").value.toUpperCase();
+    const year = formattedDateParts.find(p => p.type === "year").value;
+
 
     // Simple string replace to update the first <h1> text
     const updatedHtml = html.replace(
         /<h1>.*?<\/h1>/,
-        `<h1>${formattedDate}</h1>`
+        `<h1>
+            <span>${weekday}</span>
+            <span>${day} ${month}</span>
+            <span>${year}</span>
+        </h1>`
     );
 
     return new Response(updatedHtml, {
         headers: { "content-type": "text/html; charset=utf-8" },
     });
+
 };
 
 
