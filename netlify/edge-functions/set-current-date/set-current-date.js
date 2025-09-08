@@ -7,7 +7,7 @@ export default async (request, context) => {
     // Generate current date
     const currentDate = new Date();
     const options = { year: "numeric", month: "long", day: "numeric", weekday: "long" };
-    const formattedDate = currentDate.toLocaleDateString(undefined, options);
+    const formattedDate = currentDate.toLocaleDateString("nl-be", options);
 
     // Simple string replace to update the first <h1> text
     const updatedHtml = html.replace(
