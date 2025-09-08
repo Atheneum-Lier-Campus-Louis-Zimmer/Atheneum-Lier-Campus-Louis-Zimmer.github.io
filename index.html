@@ -5,6 +5,16 @@
    <title>Landing page</title>
 </head>
 <body>
-<h1>Hello world!</h1>
+<h1 id="date-display" style="font-family: 'Arial Black', sans-serif; color: #51673b; text-transform: uppercase;">
+   Hello world!
+</h1>
+
+<script>
+      const dateDisplay = document.getElementById('date-display');
+      const currentDate = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+      dateDisplay.textContent = currentDate.toLocaleDateString(undefined, options);
+</script>
+
 </body>
 </html>
